@@ -1,310 +1,51 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="歪闹的个人主页"><title>《高效率Javascript》阅读笔记 | 歪闹日志</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><script>var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = 'https://hm.baidu.com/hm.js?' + 'c16289f71b3611a97ef8c9a4cc8f3dc2';
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-  })();</script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">《高效率Javascript》阅读笔记</h1><a id="logo" href="/.">歪闹日志</a><p class="description">人不写文章，跟咸鱼有什么区别？</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/history"><i class="fa fa-history"> 历史</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">《高效率Javascript》阅读笔记</h1><div class="post-meta">Jan 25, 2016<span> | </span><span class="category"><a href="/categories/学习笔记/">学习笔记</a></span></div><div class="post-content"><p>以下是阅读《Effective Javascript》一书所做的一些简单的笔记（部分内容并不适合ES6）：</p>
-<h4 id="一、让自己习惯javascript"><a href="#一、让自己习惯javascript" class="headerlink" title="一、让自己习惯javascript"></a>一、让自己习惯javascript</h4><a id="more"></a>
-<ol>
-<li><p>在代码中使用严格模式</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="meta">	'use strict'</span>;</span><br><span class="line">	<span class="comment">//your code</span></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>小心js中的浮点数</p>
-<p> <code>0.1+0.2+0.3 != 0.1+(0.2+0.3)</code></p>
-<p> 转换为整数计算</p>
-<p> <code>1+2+3 == 1+(2+3)</code></p>
-<p> 浮点数有舍入误差，整数不会</p>
-</li>
-<li><p>当心隐式的强制转换</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>+<span class="literal">true</span> <span class="comment">//2</span></span><br><span class="line"><span class="number">1</span>+<span class="number">2</span> <span class="comment">//3</span></span><br><span class="line"><span class="number">1</span>+<span class="string">'2'</span> <span class="comment">//12</span></span><br><span class="line"><span class="number">1</span>+<span class="number">2</span>+<span class="string">'3'</span> <span class="comment">//33</span></span><br><span class="line"><span class="number">1</span>+<span class="string">'2'</span>+<span class="number">3</span> <span class="comment">//123</span></span><br></pre></td></tr></table></figure>
-<p> 判断NaN</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">isNaN</span>(<span class="literal">NaN</span>) <span class="comment">//true</span></span><br><span class="line"><span class="built_in">isNaN</span>(<span class="string">'foo'</span>) <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p> 看来标准库函数isNaN也不是很可靠，其会进行隐式类型转换，对于确定是数字的可以使用该方法。</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用原理：NaN是js中唯一一个不等于其自身的值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isReallyNaN</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x !== x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>原始类型优于封装对象</p>
-<p> 对原始值设置属性，毫无作用，因为每次隐式封装，都会产生一个新的对象。</p>
-<ul>
-<li>获取或设置原始类型值的属性会隐式的创建封装对象。</li>
-<li><p>当做相等比较时，原始类型的封装对象与其原始值行为不一样。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'xx'</span>.someProperty = <span class="string">'11'</span>;</span><br><span class="line"><span class="string">'xx'</span>.someProperty <span class="comment">//undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = <span class="string">'111'</span>;</span><br><span class="line">x.ss = <span class="string">'222'</span>;</span><br><span class="line">x.ss; <span class="comment">//undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'dd'</span>);</span><br><span class="line">s.n = <span class="number">1</span>;</span><br><span class="line">s.n; <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>避免对混合类型使用<code>==</code>运算符</p>
-<blockquote>
-<p>显示地定义转换的逻辑能确保你不会混淆<code>==</code>运算符的强制转换规则</p>
-</blockquote>
-</li>
-<li><p>了解分号插入的局限</p>
-</li>
-<li><p>视字符串为16位的代码单元系列</p>
-</li>
-</ol>
-<h4 id="二、变量作用域"><a href="#二、变量作用域" class="headerlink" title="二、变量作用域"></a>二、变量作用域</h4><ol start="8">
-<li><p>尽量少用全局对象</p>
-</li>
-<li><p>始终声明局部变量</p>
-</li>
-<li><p>避免使用with</p>
-</li>
-<li><p>熟练掌握闭包</p>
-<p>掌握闭包的三个基本事实：</p>
-<ol>
-<li>js允许你引用在函数以外定义的变量。</li>
-<li>即使外部函数已经返回，当前函数仍然可以引用在外部函数所定义的变量。</li>
-<li>闭包可以更新外部变量的值。</li>
-</ol>
-<blockquote>
-<p>函数可以引用定义在其外部作用域的变量。<br>闭包比创建他的函数有更长的生命周期。<br>闭包在内部存储其外部变量的引用，并能读写这些变量。</p>
-</blockquote>
-</li>
-<li><p>理解变量声明提升</p>
-</li>
-<li><p>使用立即调用的函数表达式创建局部作用域</p>
-<blockquote>
-<p>闭包通过引用而不是值捕获它们的外部变量。</p>
-</blockquote>
-</li>
-<li><p>当心命名函数表达式笨拙的作用域</p>
-</li>
-<li><p>当心局部块函数声明笨拙的作用域</p>
-</li>
-<li><p>避免使用eval创建局部变量</p>
-<blockquote>
-<p>容易造成变量污染</p>
-</blockquote>
-</li>
-<li><p>间接调用eval函数优于直接调用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="string">'global'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> x = <span class="string">'local'</span>;</span><br><span class="line">	<span class="keyword">var</span> f = <span class="built_in">eval</span>;</span><br><span class="line">	<span class="keyword">return</span> f(<span class="string">'x'</span>); <span class="comment">//非直接调用</span></span><br><span class="line">&#125;</span><br><span class="line">test(); <span class="comment">// "global"</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>编写简介调用eval函数的一种简洁方式是使用表达式序列运算符(,)和一个明显毫无意义的数字字面量。<code>(0,eval)(src)</code></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="三、使用函数"><a href="#三、使用函数" class="headerlink" title="三、使用函数"></a>三、使用函数</h4><ol start="18">
-<li><p>理解函数调用、方法调用和构造函数调用之间的区别</p>
-</li>
-<li><p>熟练掌握高阶函数</p>
-<blockquote>
-<p>高阶函数是那些将函数作为参数或返回值的函数<br>熟悉掌握现有库中的高阶函数<br>学会发现可以被高阶函数所取代的常见的编码模式</p>
-</blockquote>
-</li>
-<li><p>使用call方法自定义接收者来调用方法</p>
-</li>
-<li><p>使用apply方法通过不同数量的参数调用函数</p>
-</li>
-<li><p>使用arguments创建可变参数的函数</p>
-</li>
-<li><p>永远不要修改arguments对象</p>
-<blockquote>
-<p>可使用[].slice.call(arguments)将arguments对象复制到一个真正的数组中再进行修改。</p>
-</blockquote>
-</li>
-<li><p>使用变量保存arguments的引用</p>
-</li>
-<li><p>使用bind方法提取具有确定接收者的方法</p>
-<p>bind创建一个新函数而不是修改了原函数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">x.bind(<span class="built_in">document</span>) === x;<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用bind方法实现函数柯里化</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">simpleURL</span>(<span class="params">protocal, domain, path</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> protocal+<span class="string">'//'</span>+domain+<span class="string">'/'</span>+path;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> urls = paths.map(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">	simple(<span class="string">'http'</span>,siteDomain,path);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> urls = paths.map(simpleURL.bind(<span class="literal">null</span>,<span class="string">'http'</span>,siteDomain));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用闭包而不是字符串来封装代码</p>
-</li>
-<li><p>不要信赖函数对象的toString方法</p>
-<blockquote>
-<p>当调用函数的<code>toString</code>方法时，并没有要求js引擎输出函数的源码，且不同引擎输出结果可能不同。<br><code>toString</code>方法的输出结果并不会暴露存储在闭包中的局部变量值。</p>
-</blockquote>
-</li>
-<li><p>避免使用非标准的栈检查属性。</p>
-<blockquote>
-<p>避免使用非标准的arguments.callee和arguments.caller属性，因为他们不具有良好的移植性。<br>避免使用非标准的函数对象caller属性，因为在包含全栈信息方面，它是不可靠的，例如函数自身循环引用。</p>
-</blockquote>
-</li>
-</ol>
-<h4 id="四、对象和原型"><a href="#四、对象和原型" class="headerlink" title="四、对象和原型"></a>四、对象和原型</h4><ol start="30">
-<li><p>理解prototype、getPrototypeOf、<strong>proto</strong>之间的不同</p>
-<blockquote>
-<p>C.prototype属性的new C()创建的对象的原型。<br>Object.getPrototypeOf(obj)是ES5中检索对象原型的标准方法。<br>obj.<strong>proto</strong>是检索对象原型的非标准方法。<br>类是由一个构造函数和一个关联的原型组成的一种设计模式。</p>
-</blockquote>
-</li>
-<li><p>使用Object.getPrototypeOf函数而不要使用<strong>proto</strong>属性</p>
-<blockquote>
-<p>对于不支持ES5 API的可以使用该属性</p>
-</blockquote>
-</li>
-<li><p>使用不要修改<strong>proto</strong>属性</p>
-</li>
-<li><p>使构造函数与new操作符无关</p>
-<p>使用Object.create函数，该函数需要一个原型对象作为参数，并返回一个继承自该原型对象的新对象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">Object</span>.create === <span class="string">'undefined'</span>)&#123;</span><br><span class="line">	<span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">prototype</span>)</span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">		C.prototype = prototype;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> C();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> self = <span class="keyword">this</span> <span class="keyword">instanceof</span> User</span><br><span class="line">			? <span class="keyword">this</span></span><br><span class="line">			: <span class="built_in">Object</span>.create(User.prototype);</span><br><span class="line">	self.name = name;</span><br><span class="line">	<span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在原型中存储方法</p>
-</li>
-<li><p>使用闭包存储私有数据</p>
-</li>
-<li><p>只将实例对象存储在实例对象中</p>
-<blockquote>
-<p>共享可变数据可能会出问题，因为原型是被其所有的实例共享的。<br>将可变的实例状态存储在实例对象中。</p>
-</blockquote>
-</li>
-<li><p>认识到this变量的隐式绑定问题。</p>
-<p>例如在map、forEach参数调用中：</p>
-<blockquote>
-<p>this变量的作用域总是由其最近的封闭函数所确定。<br>使用一个局部变量（self,me,that）使得this绑定对于内部函数是可用的。<br>map、forEach都提供第三个参数作为其回调函数的this绑定。<br>在回调函数中使用bind绑定。<br>使用局部变量缓存this。</p>
-</blockquote>
-<pre><code>[].map(fn, o);
-[].forEach(fn,o);
-[].map(fn.bind(this));
-[].forEach(fn.bind(this));
-</code></pre></li>
-<li><p>在子类的构造函数中调用父类的构造函数</p>
-<p>说白了，就是面向对象的继承和多态。</p>
-<blockquote>
-<p>在子类构造函数中显示的传入this作为显示的接收者调用父类构造函数。<br>使用Object.create函数来构造子类的原型对象以避免调用父类的构造函数。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Actor</span>(<span class="params">scene,x,y</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.scene = scene;</span><br><span class="line">	<span class="keyword">this</span>.x = x;</span><br><span class="line">	<span class="keyword">this</span>.y = y;</span><br><span class="line">	scene.register(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">Actor.prototype.moveTo = <span class="function"><span class="keyword">function</span>(<span class="params">x,y</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.x = x;</span><br><span class="line">	<span class="keyword">this</span>.y = y;</span><br><span class="line">	<span class="keyword">this</span>.scene.draw();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SpaceShip</span>(<span class="params">scene,x,y</span>)</span>&#123;</span><br><span class="line">	Actor.call(<span class="keyword">this</span>,scene,x,y);</span><br><span class="line">	<span class="keyword">this</span>.points = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">SpaceShip.prototype = <span class="built_in">Object</span>.create(Actor.prototype);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>不要重用父类的属性名</p>
-<blockquote>
-<p>如果在继承体系中的两个类指向相同的属性名，那么它们指向的是同一个属性。</p>
-</blockquote>
-</li>
-<li><p>避免继承标准类</p>
-<blockquote>
-<p>继承标准类往往会由于一些特殊的内部属性（如[[Class]]）而被破坏。<br>使用属性委托优于继承标准类。</p>
-</blockquote>
-</li>
-<li><p>将原型视为实现细节</p>
-<blockquote>
-<p>js提供了便利的内省机制(introspection mechanisms)来检查对象的细节。<code>Object.prototype.hasOwnProperty/Object.getPrototypeOf</code> </p>
-</blockquote>
-</li>
-<li><p>避免使用轻率的猴子补丁</p>
-<p>由于对象共享原型，因为每一个对象都可以增加、删除或修改原型的属性。</p>
-<blockquote>
-<p>避免使用轻率的猴子补丁。<br>记录程序库所执行的所有猴子补丁。<br>考虑通过将修改置于一个导出函数中，使猴子补丁成为可选的。<br>使用猴子补丁为缺失的标准API提供polyfills。</p>
-</blockquote>
-<p>一个较为靠谱的做法是</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">Array</span>.prototype.map !==<span class="string">'function'</span>)&#123;</span><br><span class="line">	<span class="built_in">Array</span>.prototype.map = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="五、数组和字典"><a href="#五、数组和字典" class="headerlink" title="五、数组和字典"></a>五、数组和字典</h4><ol start="43">
-<li><p>使用Object的直接实例构造轻量级的字典</p>
-<p>JavaScript对象的核心是一个字符串属性名称与属性值的映射表。这使得使用对象实现字典易如反掌，因为字典就是可变长的字符串与值的映射集合。配合对象枚举利器：for…in循环。</p>
-</li>
-<li><p>使用null原型以防止原型污染</p>
-<blockquote>
-<p>在ES5环境中，使用<code>Object.create(null)</code>创建的自由原型的空对象是不太容易被污染的。<br>在一些较老的环境中，考虑使用{<strong>proto</strong>:null}。<br>但要注意<strong>proto</strong>既不标准也不完全可移植，将来可能会去除。</p>
-</blockquote>
-</li>
-<li><p>使用hasOwnProperty方法以避免原型污染。</p>
-<blockquote>
-<p>使用词法作用域和call方法避免覆盖hasOwnProperty方法。<br>使用字典类避免将’<strong>proto</strong>‘作为key来使用。</p>
-</blockquote>
-<p>终极词典代码实现：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dict</span>(<span class="params">elements</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.elements = elements;</span><br><span class="line">	<span class="keyword">this</span>.hasSpecialProto = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">this</span>.specialProto = <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line">Dict.prototype.has = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(key === <span class="string">'__proto__'</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.hasSpecialProto;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;&#125;.hasOwnProperty.call(<span class="keyword">this</span>.elements,key);</span><br><span class="line">&#125;;</span><br><span class="line">Dict.prototype.get = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(key === <span class="string">'__proto__'</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.specialProto;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.has(key)?<span class="keyword">this</span>.elements[key]:<span class="literal">undefined</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Dict.prototype.set = <span class="function"><span class="keyword">function</span>(<span class="params">key, val</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(key === <span class="string">'__proto__'</span>)&#123;</span><br><span class="line">		<span class="keyword">this</span>.hasSpecialProto = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">this</span>.specialProto = val;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.elements[key] = val;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Dict.prototype.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(key === <span class="string">'__proto__'</span>)&#123;</span><br><span class="line">		<span class="keyword">this</span>.hasSpecialProto = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">this</span>.specialProto = <span class="literal">undefined</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">delete</span> <span class="keyword">this</span>.elements[key];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> dict = <span class="keyword">new</span> Dict();</span><br><span class="line">dict.set(<span class="string">'__proto__'</span>,<span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(dict.has(<span class="string">'__proto__'</span>));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用数组而不要使用字典来存储有序集合</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ratings = &#123;</span><br><span class="line">	<span class="string">'haha'</span>:<span class="number">0.8</span>,</span><br><span class="line">	<span class="string">'xixi'</span>:<span class="number">0.7</span>,</span><br><span class="line">	<span class="string">'21'</span>:<span class="number">0.6</span>,</span><br><span class="line">	<span class="string">'hehe'</span>:<span class="number">0.9</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> total = <span class="number">0</span>,count=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> ratings)&#123;</span><br><span class="line">	total += ratings[key];</span><br><span class="line">	<span class="built_in">console</span>.log(key);</span><br><span class="line">	count++;</span><br><span class="line">&#125;</span><br><span class="line">total /= count;</span><br><span class="line"><span class="built_in">console</span>.log(total);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>使用for…in循环来枚举对象属性应当与顺序无关。<br>如果聚集运算字典中的数据，确保聚集操作与顺序无关。<br>使用数组而不是字典来存储有序集合。</p>
-</blockquote>
-</li>
-<li><p>绝对不要在Object.prototype中增加可枚举的属性</p>
-<blockquote>
-<p>使用<code>Object.defineProperty</code>方法定义不可枚举属性。<br>使用<code>{}.hasOwnProperty</code>判断是否是原型上的方法。</p>
-</blockquote>
-</li>
-<li><p>避免在枚举期间修改对象</p>
-</li>
-<li><p>数组迭代要优先使用for循环而不是for…in循环</p>
-</li>
-<li><p>迭代方法优于循环</p>
-<blockquote>
-<p>使用迭代方法（forEach,map,filter）替代for循环使得代码更可读，并且避免了重复循环控制逻辑。<br>使用自定义的迭代函数来抽象未被标准库支持的常见循环模式。<br>在需要提前终止循环的情况下，仍然推荐使用传统的循环。some和every方法也可用于提前退出。</p>
-</blockquote>
-</li>
-<li><p>在类数组对象上复用通用的数组方法</p>
-<blockquote>
-<p>对于类数组对象，通过提取方法对象并使用其call方法来复用通用的Array方法。<br>任意一个具有索引属性和恰当length属性的对象都可以使用通用的Array方法。</p>
-</blockquote>
-</li>
-<li><p>数组字面量优于数组构造函数</p>
-</li>
-</ol>
-<h4 id="六、库和API设计"><a href="#六、库和API设计" class="headerlink" title="六、库和API设计"></a>六、库和API设计</h4><ol start="53">
-<li><p>保持一致的约定</p>
-</li>
-<li><p>将undefined看做”没有值”</p>
-<blockquote>
-<p>避免使用undefined表示任何非特定值<br>使用描述性的字符串值或命名布尔属性的对象，而不要使用undefined或null来表示特定应用标志<br>提供参数默认值应当采用测试undefined的方式，而不是检查arguments.length<br>在允许0、NaN或空字符串为有效参数的地方，绝不要通过真值测试来实现参数默认值</p>
-</blockquote>
-</li>
-<li><p>接收关键字参数的选项对象</p>
-<blockquote>
-<p>使用选项对象使得API更具可读性、更容易记忆<br>所有通过选项对象提供的参数应当被视为可选的<br>使用extend函数抽象出从选项对象中提取值的逻辑</p>
-</blockquote>
-</li>
-<li><p>避免不必要的状态</p>
-<blockquote>
-<p>尽可能地使用无状态的API<br>如果API是由状态的，标示出每个操作与哪些状态由关联</p>
-</blockquote>
-</li>
-<li><p>使用结构类型设计灵活的接口</p>
-</li>
-<li><p>区分数据对象和类数组对象</p>
-</li>
-<li><p>避免过度的强制转换</p>
-</li>
-<li><p>支持方法链</p>
-<blockquote>
-<p>使用方法链来连接无状态的操作<br>通过在无状态的方法中返回新对象来支持方法链<br>通过在有状态的方法中返回this来支持方法链</p>
-</blockquote>
-</li>
-</ol>
-<h4 id="七、并发"><a href="#七、并发" class="headerlink" title="七、并发"></a>七、并发</h4><ol start="61">
-<li><p>不要阻塞I/O事件队列</p>
-</li>
-<li><p>在异步序列中使用嵌套或命名的回调函数</p>
-<blockquote>
-<p>使用嵌套或命名的回调函数按顺序地执行多个异步操作<br>尝试在过多的嵌套的回调函数和尴尬的命名的非嵌套回调函数之间取得平衡<br>避免将可被并行执行的操作顺序化</p>
-</blockquote>
-</li>
-<li><p>当心丢弃错误</p>
-</li>
-<li><p>对异步循环使用递归</p>
-<blockquote>
-<p>循环不能是异步的<br>使用递归函数在事件循环的单独轮次中执行迭代<br>在事件循环的单独轮次中执行递归，并不会导致调用栈溢出</p>
-</blockquote>
-</li>
-<li><p>不要在计算时阻塞事件队列</p>
-<blockquote>
-<p>避免在主事件队列中执行代价高昂的算法<br>在支持Worker API的平台，该API可以用来在一个独立的事件队列中运行长计算程序</p>
-</blockquote>
-</li>
-<li><p>使用计数器来执行并行操作</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadAllAsync</span>(<span class="params">urls, onsuccess</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> pending = urls.length;</span><br><span class="line">	<span class="keyword">var</span> result = [];</span><br><span class="line">	<span class="keyword">if</span>(pending === <span class="number">0</span>)&#123;</span><br><span class="line">		setTimeout(onsuccess.bind(<span class="literal">null</span>, result),<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//for(var i=0;i&lt;pending;i++)&#123;</span></span><br><span class="line">	<span class="comment">//	console.log(urls[i],i);</span></span><br><span class="line">	<span class="comment">//	downloadAsync(url,function(urls[i])&#123;</span></span><br><span class="line">	<span class="comment">//		result[i] = text;</span></span><br><span class="line">	<span class="comment">//		console.log(i,text);</span></span><br><span class="line">	<span class="comment">//		pending--;</span></span><br><span class="line">	<span class="comment">//		if(pending === 0)&#123;</span></span><br><span class="line">	<span class="comment">//			onsuccess(result);</span></span><br><span class="line">	<span class="comment">//		&#125;</span></span><br><span class="line">	<span class="comment">//	&#125;);</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">	urls.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">url, i</span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(url,i);</span><br><span class="line">		downloadAsync(url, <span class="function"><span class="keyword">function</span>(<span class="params">text</span>)</span>&#123;</span><br><span class="line">			result[i] = text;</span><br><span class="line">			<span class="built_in">console</span>.log(i,text);</span><br><span class="line">			pending--;</span><br><span class="line">			<span class="keyword">if</span>(pending === <span class="number">0</span>)&#123;</span><br><span class="line">				onsuccess(result);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadAsync</span>(<span class="params">url, fnSuc</span>)</span>&#123;</span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		fnSuc(url);</span><br><span class="line">	&#125;,<span class="built_in">Math</span>.random()*<span class="number">10000</span>);</span><br><span class="line">&#125;</span><br><span class="line">downloadAllAsync([<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>],<span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>绝不要同步地调用异步的回调函数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cache = <span class="keyword">new</span> Dict();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadCachingAsync</span>(<span class="params">url, onsuccess, onerror</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(cache.has(url)&#123;</span><br><span class="line">		<span class="keyword">var</span> cached = cache.get(url);</span><br><span class="line">		setTimeout(onsuccess.bind(<span class="literal">null</span>,cached),<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> downloadAsync(url, <span class="function"><span class="keyword">function</span>(<span class="params">file</span>)</span>&#123;</span><br><span class="line">		cache.set(url, file);</span><br><span class="line">		onsuccess(file);</span><br><span class="line">	&#125;,onerror);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>即使可以立即得到数据，也绝不要同步地调用异步回调函数。<br>同步地调用异步的回调函数扰乱了预期的操作序列，并可能导致意想不到的交错代码。<br>同步地调用异步的回调函数可能导致栈溢出或错误地处理异常。<br>使用异步的API，比如setTimeout函数来调度异步回调函数，使其运行于另一个回合。</p>
-</blockquote>
-</li>
-<li><p>使用promise模式清洁异步逻辑</p>
-</li>
-</ol>
-</div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>少年歪</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2016/01/25/effect-js/">https://vhtml.github.io/2016/01/25/effect-js/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！</li></ul></div><br><div class="tags"><a href="/tags/javascript/">javascript</a></div><div class="post-nav"><a class="pre" href="/2016/02/16/JSON/">你未必知道的JSON.parse和JSON.stringify</a><a class="next" href="/2016/01/19/redis-study/">redis学习实践</a></div><div id="container"></div><link rel="stylesheet" type="text/css" href="//unpkg.com/gitalk/dist/gitalk.css?v=2.0.0"><script type="text/javascript" src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js?v=2.0.0"></script><script type="text/javascript" src="//unpkg.com/gitalk/dist/gitalk.min.js?v=2.0.0"></script><script>var gitalk = new Gitalk({
-  clientID: '272ace1d1cff9e94b4ce',
-  clientSecret: '8f045e26d55161e9209d37d76db85a197bab203c',
-  repo: 'vhtml.github.io',
-  owner: 'vhtml',
-  admin: [''],
-  id: md5(location.pathname),
-  distractionFreeMode: false
-})
-gitalk.render('container')
-</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="https://vhtml.github.io"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/web技术/">web技术</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a><span class="category-list-count">2</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a> <a href="/tags/lib/" style="font-size: 15px;">lib</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a> <a href="/tags/前端工程化/" style="font-size: 15px;">前端工程化</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/babel/" style="font-size: 15px;">babel</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/09/ready-promise/">检测“资源”是否初始化完成的简单方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/babel-polyfill-vs-transform-runtime/">babel-polyfill和transform-runtime揭秘</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/05/js-nextTick/">Vue中nextTick方法的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/27/js-cache/">js缓存技术的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/22/get-object-value/">使用属性表达式获取对象属性值</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/29/webpack-2/">基于webpack的前端工程化开发之多页站点篇（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/26/webpack-1/">基于webpack的前端工程化开发之多页站点篇（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/16/JSON/">你未必知道的JSON.parse和JSON.stringify</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/25/effect-js/">《高效率Javascript》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/redis-study/">redis学习实践</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.cnblogs.com/vectoryao/" title="VectorYao" target="_blank">VectorYao</a><ul></ul><a href="http://msisliao.github.io/" title="若水" target="_blank">若水</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">歪闹日志.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=2.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=2.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=2.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=2.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.duoshuo
+      a.ds-thread-count(data-thread-key=page.path, href=url_for(page.path) + '#comments')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content)
+    .post-content
+      != page.content
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}')= __('shareto')
+    include _partial/tag
+    include _partial/post_nav
+    if theme.duoshuo
+      div(class='ds-share flat' data-thread-key=page.path, data-title=page.title, data-url=page.permalink)
+         .ds-share-inline
+            ul.ds-share-icons-16
+              li(data-toggle='ds-share-icons-more')
+                a(class='ds-more' href='javascript:void(0);') 分享到：
+              li
+                a(class='ds-weibo' href='javascript:void(0);' data-service='weibo') 微博
+              li
+                a(class='ds-qzone' href='javascript:void(0);' data-service='qzone') QQ空间
+              li
+                a(class='ds-qqt' href='javascript:void(0);' data-service='qqt') 腾讯微博
+              li
+                a(class='ds-wechat' href='javascript:void(0);' data-service='wechat') 微信
+            .ds-share-icons-more
+    include _partial/comments
