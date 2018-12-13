@@ -17,7 +17,7 @@
 </ul>
 <p>JavaScript引擎首先从macrotask queue中取出第一个任务（通常是当前代码段），执行完毕后，将microtask queue中的所有任务取出，按顺序全部执行；然后再从macrotask queue中取下一个，执行完毕后，再次将microtask queue中的全部取出；循环往复，直到两个queue中的任务都取完。</p>
 <p>为什么要说这些呢？ 因为Vue文档里这么说了：</p>
-<p><img src="http://img.html5cc.com/6FEBE115-970F-4089-8BDF-A15B41B7ED43.png" alt="歪闹日志"></p>
+<p><img src="/images/next-tick-img.png" alt="歪闹日志"></p>
 <p>正是因为Vue里做了这样的优化，当Model层数据发生改变时，dom不会立刻去响应变化。所以当需要正确地获取响应了数据变化之后的DOM时，就要在DOM更新之后去获取。</p>
 <p>而如何在当前事件队列执行完毕后尽快响应回调，才是今天要说的内容。借助开头所说的两种任务队列，要实现这个功能不难。Vue中用到了Promise.then和MutationObserver，只有当执行环境不支持时，才降级使用setTimeout代替。</p>
 <p>先来个简单的Promises版的实现：</p>

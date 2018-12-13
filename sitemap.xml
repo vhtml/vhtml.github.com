@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://vhtml.github.io/2017/03/27/js-cache/</loc>
+    
+    <lastmod>2018-12-13T10:54:14.531Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://vhtml.github.io/2018/05/02/babel-polyfill-vs-transform-runtime/</loc>
     
-    <lastmod>2018-12-13T10:37:53.564Z</lastmod>
+    <lastmod>2018-12-13T10:53:51.948Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://vhtml.github.io/2017/06/05/js-nextTick/</loc>
+    
+    <lastmod>2018-12-13T10:53:47.685Z</lastmod>
     
   </url>
   
@@ -12,20 +26,6 @@
     <loc>https://vhtml.github.io/2018/07/09/ready-promise/</loc>
     
     <lastmod>2018-12-11T11:55:24.489Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://vhtml.github.io/2017/06/05/js-nextTick/</loc>
-    
-    <lastmod>2018-12-09T15:30:29.316Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://vhtml.github.io/2017/03/27/js-cache/</loc>
-    
-    <lastmod>2018-12-09T15:30:29.315Z</lastmod>
     
   </url>
   
