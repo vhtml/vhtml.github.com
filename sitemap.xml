@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://vhtml.github.io/2018/07/09/ready-promise/</loc>
+    
+    <lastmod>2018-12-11T11:55:24.489Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://vhtml.github.io/2018/05/02/babel-polyfill-vs-transform-runtime/</loc>
     
     <lastmod>2018-12-11T09:39:33.627Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://vhtml.github.io/2017/03/27/js-cache/</loc>
     
     <lastmod>2018-12-09T15:30:29.315Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://vhtml.github.io/2018/07/09/ready-promise/</loc>
-    
-    <lastmod>2018-07-09T11:16:50.000Z</lastmod>
     
   </url>
   
