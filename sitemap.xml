@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://vhtml.github.io/2017/12/17/flex-grammar/</loc>
+    
+    <lastmod>2019-01-03T07:14:26.863Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://vhtml.github.io/2017/12/17/flex-practice/</loc>
+    
+    <lastmod>2019-01-03T07:13:58.751Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://vhtml.github.io/2017/03/27/js-cache/</loc>
     
     <lastmod>2018-12-13T10:54:14.531Z</lastmod>
@@ -37,13 +51,6 @@
   </url>
   
   <url>
-    <loc>https://vhtml.github.io/2016/02/29/webpack-2/</loc>
-    
-    <lastmod>2018-07-09T07:26:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://vhtml.github.io/2016/01/25/effect-js/</loc>
     
     <lastmod>2018-07-09T07:26:50.000Z</lastmod>
@@ -51,7 +58,7 @@
   </url>
   
   <url>
-    <loc>https://vhtml.github.io/2017/03/22/get-object-value/</loc>
+    <loc>https://vhtml.github.io/2016/02/16/JSON/</loc>
     
     <lastmod>2018-07-09T07:26:50.000Z</lastmod>
     
@@ -72,7 +79,14 @@
   </url>
   
   <url>
-    <loc>https://vhtml.github.io/2016/02/16/JSON/</loc>
+    <loc>https://vhtml.github.io/2017/03/22/get-object-value/</loc>
+    
+    <lastmod>2018-07-09T07:26:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://vhtml.github.io/2016/02/29/webpack-2/</loc>
     
     <lastmod>2018-07-09T07:26:50.000Z</lastmod>
     
@@ -86,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://vhtml.github.io/categories/index.html</loc>
+    <loc>https://vhtml.github.io/history/index.html</loc>
     
     <lastmod>2018-07-09T07:26:50.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://vhtml.github.io/history/index.html</loc>
+    <loc>https://vhtml.github.io/categories/index.html</loc>
     
     <lastmod>2018-07-09T07:26:50.000Z</lastmod>
     
