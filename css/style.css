@@ -380,22 +380,32 @@ div {
 blockquote, .stressed {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 2.5em 0;
-  padding: 0 0 0 50px;
+  position: relative;
+  margin: 1em 0;
+  padding: 0.5em 1em;
   color: #555;
+  background-color: #f9f9f9;
   border-left: none; }
 
+.post .post-content blockquote p,
+.post .post-content .stressed p {
+  margin: 0.5em 0;
+  line-height: 1.5;
+  font-size: 13px; }
+
 blockquote::before, .stressed-quote::before {
-  content: "\201C";
+  content: "";
   display: block;
   font-family: times;
   font-style: normal;
+  width: 3px;
+  height: 100%;
   font-size: 48px;
   color: #444;
-  font-weight: bold;
-  line-height: 30px;
-  margin-left: -50px;
-  position: absolute; }
+  background-color: #e1e1e1;
+  position: absolute;
+  left: 0;
+  top: 0; }
 
 strong, b, em {
   font-weight: bold; }
